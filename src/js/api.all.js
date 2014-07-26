@@ -38,7 +38,7 @@ var deezer= deezer || false;
 (function(w,core){
 !deezer?deezer = {
 	info:{
-	autore:'Salvatore Mariniello',
+	author:'Salvatore Mariniello',
 	versione:1.0,
 	license: 'https://www.mozilla.org/MPL/2.0/index.txt',
 	contact:'salvo.mariniello@gmail.com'
