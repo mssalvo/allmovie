@@ -1,6 +1,6 @@
 /**
  * @author Salvatore Mariniello
- * http://www.msdeveloper.it/deezer-jquery/api.html
+ *  
 	
 	The contents of this file are subject to the Mozilla Public License
 	Version 1.1 (the "License"); you may not use this file except in
@@ -38,7 +38,7 @@ var deezer= deezer || false;
 (function(w,core){
 !deezer?deezer = {
 	info:{
-	author:'Salvatore Mariniello',
+	autore:'Salvatore Mariniello',
 	versione:1.0,
 	license: 'https://www.mozilla.org/MPL/2.0/index.txt',
 	contact:'salvo.mariniello@gmail.com'
@@ -280,8 +280,8 @@ var deezer= deezer || false;
 				console.log("deezer.tracksid:",deezer.tracksid)
 				deezer.current.trackID=deezer.tracksid[deezer.index-1];
 				deezer.addController.playTracks(deezer.tracksid,deezer.index-1,function(r){deezer.current.trackID=deezer.tracksid[deezer.index-1];})}  
-				      ).mouseover(function(e){$(this).css("color","#FF18E3")})
-					  .mouseout(function(e){$(this).css("color","#646468")}) 
+				      ).mouseover(function(e){$(this).css("color",deezer.setting.labelTextColorOver)})
+					  .mouseout(function(e){$(this).css("color",deezer.setting.labelTextColorOut)}) 
 					  )	  
 				deezer.collectionTitle.push({id:b[l].id,el:c})	
 				deezer.tracksid.push(b[l].id)
@@ -309,8 +309,8 @@ var deezer= deezer || false;
 					).append($("<div/>").html(b[j].album.title)
 					.addClass("albumInfo")
 					.attr("pos",b[j].album.id)
-					.mouseover(function(e){$(this).css("opacity","1")})
-					.mouseout(function(e){$(this).css("opacity","0")})
+					.mouseover(function(e){$(this).css("opacity",deezer.setting.albumInfoOpacityOver)})
+					.mouseout(function(e){$(this).css("opacity",deezer.setting.albumInfoOpacityOut)})
 					.click(function(){deezer.current.albumID=$(this).attr("pos"); deezer.search.album_tracker($(this).attr("pos"))})
 					)
 					 
@@ -352,8 +352,8 @@ var deezer= deezer || false;
 					 //
 					 .append($("<div/>").html(b[j].artist.name).addClass("albumInfo")
 					 .attr("pos",b[j].id)
-					 .mouseover(function(e){$(this).css("opacity","1")})
-					 .mouseout(function(e){$(this).css("opacity","0")})
+					 .mouseover(function(e){$(this).css("opacity",deezer.setting.albumInfoOpacityOver)})
+					 .mouseout(function(e){$(this).css("opacity",deezer.setting.albumInfoOpacityOut)})
 					 .click(function(){deezer.current.albumID=$(this).attr("pos"); 
 					  deezer.search.album_tracker($(this).attr("pos"))} )
 					 )
@@ -361,8 +361,7 @@ var deezer= deezer || false;
 					.mouseover(function(e){$(this).addClass("albumIn")})
 					.mouseout(function(e){$(this).removeClass("albumIn")})
 					.append(
-					$("<div/>").css({"position":"absolute","bottom":"5px","right":"0px","padding-top":"5px","text-align":"center","width":"40px","height":"40px","border-radius":"50%","background":"yellow"})
-					.html(b[j].nb_tracks)
+					$("<div/>").addClass("starAlbum").html(b[j].nb_tracks)
 					)
 					 ) /*fine contentBox*/
 					
@@ -380,7 +379,11 @@ var deezer= deezer || false;
 	boxProgressBar:{},
 	fnMenu:function(r){},
 	fnAlbum:function(r){},
-	fnAll:function(r){}
+	fnAll:function(r){},
+	labelTextColorOver:'#FF18E3',
+	labelTextColorOut:'#646468',
+	albumInfoOpacityOver:1,
+	albumInfoOpacityOut:0
 	},
 	collectionTitle:[],
 	collectionBox:[],
@@ -431,4 +434,3 @@ var api=api || false;
    youtube:y
  }:api;
 })(deezer,youtube)
-  
