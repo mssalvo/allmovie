@@ -1,24 +1,25 @@
-/**
- * @author Salvatore Mariniello
- *  
-	
-	The contents of this file are subject to the Mozilla Public License
-	Version 1.1 (the "License"); you may not use this file except in
-	compliance with the License. You may obtain a copy of the License at
-	http://www.mozilla.org/MPL/
-
-	Software distributed under the License is distributed on an "AS IS"
-	basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
-	License for the specific language governing rights and limitations
-	under the License.
-
-	The Original Code is javascript.
-
-	The Initial Developer of the Original Code is Salvatore Mariniello.
-	Portions created by Salvatore Mariniello are Copyright (C) 2014
-	Salvatore Mariniello. All Rights Reserved.
-
- */
+	/**
+	* @author Salvatore Mariniello
+	* 
+	*	The contents of this file are subject to the Mozilla Public License
+	*	Version 1.1 (the "License"); you may not use this file except in
+	*	compliance with the License. You may obtain a copy of the License at
+	*	http://www.mozilla.org/MPL/
+	*
+	*	Software distributed under the License is distributed on an "AS IS"
+	*	basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+	*	License for the specific language governing rights and limitations
+	*	under the License.
+	*
+	*	The Original Code is javascript.
+	*
+	*	The Initial Developer of the Original Code is Salvatore Mariniello.
+	*	Portions created by Salvatore Mariniello are Copyright (C) 2014
+	*	Salvatore Mariniello. All Rights Reserved.
+	* 
+	*
+	* Source: http://github.com/mssalvo/allmovie/raw/master/src/js/api.all.js
+	*/
  
  var EVENT = EVENT ||{
 PLAYER_LOADED:"player_loaded",
@@ -32,7 +33,10 @@ REPEAT_CHANGED:"repeat_changed",
 MUTE_CHANGED:"mute_changed",
 TRACKLIST_CHANGED:"tracklist_changed",
 TRACK_END:"track_end",
-CURRENT_TRACK:"current_track"
+CURRENT_TRACK:"current_track",
+SEARCH_BLUR:"search_blur",
+SEARCH_KEYUP:"search_keyup",
+SEARCH_CLICK:"search_click"
 };
 var deezer= deezer || false;
 (function(w,core){
@@ -70,7 +74,9 @@ var deezer= deezer || false;
 	MUTE_CHANGED:[],
 	TRACKLIST_CHANGED:[],
 	TRACK_END:[],
-	CURRENT_TRACK:[]
+	CURRENT_TRACK:[],
+	SEARCH_BLUR:[],
+	SEARCH_CLICK:[]
 	},
 	addController:{
     play:function(o){deezer.player.play(o)},
@@ -99,10 +105,12 @@ var deezer= deezer || false;
 	getMute:function(){return deezer.core.player.getMute()}
 	},
 	addEventListener:function(){
+		var EVT="",fn=null,ob=null,b_=true,ary=[];
 		if(arguments.length>0){
 		for(k in arguments){
-		var EVT="",fn=function(r){},ob={},b_=true,ary=[];
+		 
 		arg=typeof arguments[k]
+		 
 		switch(arg){
 		case "string":
 		if(arguments[k]=="true" || arguments[k]=="false"){b_=new Boolean(arguments[k])}
@@ -122,6 +130,8 @@ var deezer= deezer || false;
 		break;
 
 		}
+		
+		}
 		if(EVT==EVENT.PLAYER_LOADED){
 		 
 		 deezer.putListener(EVENT.PLAYER_LOADED,function(r){ if(b_){deezer.loader(r,fn)} else if(fn && typeof fn =='function'){fn(r)}})
@@ -134,13 +144,35 @@ var deezer= deezer || false;
 		 
 		deezer.putListener(EVENT.PLAYER_POSITION,function(r){ deezer.progress(r,fn,ob)})
 		}
+		else if(EVT==EVENT.SEARCH_BLUR){
+		 
+		if(ob && ob.bind){
+		deezer.setting.inputSearch=ob;
+		ob.bind("blur",fn||deezer.fn_search_blur)
+		}else if(deezer.setting.inputSearch && deezer.setting.inputSearch.bind){
+		deezer.setting.inputSearch.bind("blur",fn||deezer.fn_search_blur)
+		}
+		}
+		else if(EVT==EVENT.SEARCH_KEYUP){
+		 
+		if(ob && ob.bind){
+		deezer.setting.inputSearch=ob;
+		ob.bind("keyup",fn||deezer.fn_search_blur)
+		}else if(deezer.setting.inputSearch && deezer.setting.inputSearch.bind){
+		deezer.setting.inputSearch.bind("keyup",fn||deezer.fn_search_blur)
+		}
+		}
+		else if(EVT==EVENT.SEARCH_CLICK){
+		if(ob && ob.bind){
+		ob.bind("click",fn||deezer.fn_search_click)
+		}else if(deezer.setting.buttonSearch && deezer.setting.buttonSearch.bind){
+		deezer.setting.buttonSearch.bind("click",fn||deezer.fn_search_click)
+		}
+		}
 		else{
 	 	deezer.putListener(EVT,function(r){if(fn && typeof fn =='function'){fn(r)}}) 
 		}
-		}
-		
-		
-		
+	 
 		}
 	
 	},	
@@ -240,6 +272,27 @@ var deezer= deezer || false;
 		f(r)		
 		 
 	},
+	 fn_search_blur:function(){
+		
+		if(deezer.setting.boxAlbum){
+		deezer.setting.boxAlbum.html("")
+		}
+		 // avvio la ricerca per più chiavi di ricerca 
+		 deezer.search.all($(this).val());	
+		 // avvio la ricerca per solo album 
+		 deezer.search.album($(this).val());
+	},
+	fn_search_click:function(){
+		
+		if(deezer.setting.boxAlbum){
+		deezer.setting.boxAlbum.html("")
+		}
+		 // avvio la ricerca per più chiavi di ricerca 
+		 deezer.search.all(deezer.setting.inputSearch.val());	
+		 // avvio la ricerca per solo album 
+		 deezer.search.album(deezer.setting.inputSearch.val());
+	},
+	
 	fn:function(r,f){ f(r)
 	},
 	currentTracker:function(r,f){
@@ -265,7 +318,7 @@ var deezer= deezer || false;
 	},
 	getElementsTitle:function(r,v){
 		b=r.data;
-		console.log( 'b...',b);	
+		 
 		deezer.setting.boxMenu.html("");
 				deezer.collectionTitle=[];
 				deezer.tracksid=[];
@@ -276,12 +329,12 @@ var deezer= deezer || false;
 				.click( function(){ 
 				deezer.index=$(this).attr("pos");
 				deezer.current.trackID=deezer.tracksid[deezer.index-1];
-				console.log("deezer.index:",deezer.index-1)
-				console.log("deezer.tracksid:",deezer.tracksid)
+				//console.log("deezer.index:",deezer.index-1)
+				//console.log("deezer.tracksid:",deezer.tracksid)
 				deezer.current.trackID=deezer.tracksid[deezer.index-1];
 				deezer.addController.playTracks(deezer.tracksid,deezer.index-1,function(r){deezer.current.trackID=deezer.tracksid[deezer.index-1];})}  
-				      ).mouseover(function(e){$(this).css("color",deezer.setting.labelTextColorOver)})
-					  .mouseout(function(e){$(this).css("color",deezer.setting.labelTextColorOut)}) 
+				      ).mouseover(function(e){$(this).css({"color":deezer.setting.labelTextColorOver})})
+					  .mouseout(function(e){$(this).css({"color":deezer.setting.labelTextColorOut})}) 
 					  )	  
 				deezer.collectionTitle.push({id:b[l].id,el:c})	
 				deezer.tracksid.push(b[l].id)
@@ -309,8 +362,8 @@ var deezer= deezer || false;
 					).append($("<div/>").html(b[j].album.title)
 					.addClass("albumInfo")
 					.attr("pos",b[j].album.id)
-					.mouseover(function(e){$(this).css("opacity",deezer.setting.albumInfoOpacityOver)})
-					.mouseout(function(e){$(this).css("opacity",deezer.setting.albumInfoOpacityOut)})
+					.mouseover(function(e){$(this).css({"opacity":deezer.setting.albumInfoOpacityOver})})
+					.mouseout(function(e){$(this).css({"opacity":deezer.setting.albumInfoOpacityOut})})
 					.click(function(){deezer.current.albumID=$(this).attr("pos"); deezer.search.album_tracker($(this).attr("pos"))})
 					)
 					 
@@ -324,7 +377,37 @@ var deezer= deezer || false;
 				  
 		          deezer.setting.fnAll({response:r,albums:deezer.collectionBox,albumid:deezer.albumid})  
 	},
-	
+	default_current_track:function(e){
+	 
+	deezer.setting.titoloCover.html("<b>"+e.r.track.artist.name+"</b><br>"+e.r.track.title) 
+	deezer.setting.imageCover.attr("src",e.respons.album.cover)
+	deezer.setting.currentPlay=e.current;
+	//console.log('currentPlay...',e.current);
+
+		},
+	 default_track_end:function() {
+	 deezer.setting.pause.css("display","none")
+	 deezer.setting.play.css("display","block")
+	 if(deezer.setting.currentPlay!=null){
+		deezer.setting.currentPlay.css("background","#F1F1F1","color","#646468")
+	  }
+		},
+	 default_player_paused:function(e){
+	 deezer.setting.lineProgress.css("display","none")
+	 deezer.setting.pause.css("display","none")
+	 deezer.setting.play.css("display","block")
+	 if(deezer.setting.currentPlay!=null){
+		deezer.setting.currentPlay.css("background","#F1F1F1","color","#646468")
+	  }
+		},
+	default_player_play:function(e){
+	 deezer.setting.lineProgress.css("display","block")
+	 deezer.setting.play.css("display","none")
+	 deezer.setting.pause.css("display","block").css("background","url(img/eq_white.gif) #252525 no-repeat center center")
+	 if(deezer.setting.currentPlay!=null){
+		deezer.setting.currentPlay.css("background","url(img/eq_primary.gif) #ccc 2% 50% no-repeat")
+	  }
+	},		
 	getElementsBoxUser:function(){},
 	getElementsBoxArtist:function(){},
 	getElementsBoxRadio:function(){},
@@ -352,8 +435,8 @@ var deezer= deezer || false;
 					 //
 					 .append($("<div/>").html(b[j].artist.name).addClass("albumInfo")
 					 .attr("pos",b[j].id)
-					 .mouseover(function(e){$(this).css("opacity",deezer.setting.albumInfoOpacityOver)})
-					 .mouseout(function(e){$(this).css("opacity",deezer.setting.albumInfoOpacityOut)})
+					 .mouseover(function(e){$(this).css({"opacity":deezer.setting.albumInfoOpacityOver})})
+					 .mouseout(function(e){$(this).css({"opacity":deezer.setting.albumInfoOpacityOut})})
 					 .click(function(){deezer.current.albumID=$(this).attr("pos"); 
 					  deezer.search.album_tracker($(this).attr("pos"))} )
 					 )
@@ -376,20 +459,30 @@ var deezer= deezer || false;
 	setting:{
 	boxMenu:{},
 	boxAlbum:{},
+	titoloCover:false,
+	imageCover:false,
+	inputSearch:false,
+	buttonSearch:false,
 	boxProgressBar:{},
+	lineProgress:false,
+	play:false,
+	pause:false,
+	prev:false,
+	next:false,
 	fnMenu:function(r){},
 	fnAlbum:function(r){},
 	fnAll:function(r){},
-	labelTextColorOver:'#FF18E3',
-	labelTextColorOut:'#646468',
-	albumInfoOpacityOver:1,
-	albumInfoOpacityOut:0
+	labelTextColorOver:"#FF18E3",
+	labelTextColorOut:"#646468",
+	albumInfoOpacityOver:"1",
+	albumInfoOpacityOut:"0"
 	},
 	collectionTitle:[],
 	collectionBox:[],
 	tracksid:[],
 	albumid:[],
 	index:0,
+	currentPlay:false,
 	getIndex:function(b){
 	if(b){
 	if((deezer.index-1)<deezer.tracksid.length-1){
@@ -409,8 +502,8 @@ var deezer= deezer || false;
 		var progres = $(e.delegateTarget);
 		var x = e.clientX - progres.offset().left;
 		var xMax = progres.width();
-		console.log(e.clientX, progres.offset().left, e);
-		console.log(x / xMax * 100);
+		//console.log(e.clientX, progres.offset().left, e);
+		//console.log(x / xMax * 100);
 		deezer.addController.seek(x / xMax * 100);
 	    } )
 	
@@ -423,7 +516,7 @@ var deezer= deezer || false;
 
 var youtube = youtube || {};
 (function(d){
-alert(d.info.autore)
+//alert(d.info.autore)
  })(deezer)
  
  
@@ -434,3 +527,4 @@ var api=api || false;
    youtube:y
  }:api;
 })(deezer,youtube)
+  
