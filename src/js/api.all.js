@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @author Salvatore Mariniello
  * 
 	
@@ -109,7 +109,7 @@ var deezer= deezer || false;
 		for(k in arguments){
 		 
 		arg=typeof arguments[k]
-		 
+		
 		switch(arg){
 		case "string":
 		if(arguments[k]=="true" || arguments[k]=="false"){b_=new Boolean(arguments[k])}
@@ -406,7 +406,17 @@ var deezer= deezer || false;
 	 if(deezer.setting.currentPlay!=null){
 		deezer.setting.currentPlay.css("background","url(img/eq_primary.gif) #ccc 2% 50% no-repeat")
 	  }
-	},		
+	},
+	all_init_default_event:function(){
+	  deezer.addEventListener(EVENT.CURRENT_TRACK, deezer.default_current_track);
+	  deezer.addEventListener(EVENT.PLAYER_LOADED, function(){});
+	  deezer.addEventListener(EVENT.TRACK_END, deezer.default_track_end);
+	  deezer.addEventListener(EVENT.PLAYER_PAUSED, deezer.default_player_paused);
+	  deezer.addEventListener(EVENT.PLAYER_PLAY, deezer.default_player_play);
+	  
+	  deezer.addEventListener(EVENT.PLAYER_POSITION,deezer.setting.lineProgress);
+	  deezer.addEventListener(EVENT.SEARCH_KEYUP,deezer.setting.inputSearch);
+	},
 	getElementsBoxUser:function(){},
 	getElementsBoxArtist:function(){},
 	getElementsBoxRadio:function(){},
