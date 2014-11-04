@@ -18,6 +18,7 @@
 	Portions created by Salvatore Mariniello are Copyright (C) 2014
 	Salvatore Mariniello. All Rights Reserved.
 
+        https://github.com/mssalvo/allmovie
  */
  
  var EVENT = EVENT ||{
