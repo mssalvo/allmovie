@@ -19,7 +19,15 @@
 	Salvatore Mariniello. All Rights Reserved.
 
         https://github.com/mssalvo/allmovie
+        
+        
+	implement:
+	<head>
+	<script type="text/javascript" src="http://cdn-files.deezer.com/js/min/dz.js"></script>
+	</head>
+        
  */
+ 
  
  var EVENT = EVENT ||{
 PLAYER_LOADED:"player_loaded",
@@ -145,11 +153,13 @@ var deezer= deezer || false;
 		deezer.putListener(EVENT.PLAYER_POSITION,function(r){ deezer.progress(r,fn,ob)})
 		}
 		else if(EVT==EVENT.SEARCH_BLUR){
-		 
+
 		if(ob && ob.bind){
 		deezer.setting.inputSearch=ob;
+		deezer.setting.inputSearch.unbind();
 		ob.bind("blur",fn||deezer.fn_search_blur)
 		}else if(deezer.setting.inputSearch && deezer.setting.inputSearch.bind){
+		 deezer.setting.inputSearch.unbind();
 		deezer.setting.inputSearch.bind("blur",fn||deezer.fn_search_blur)
 		}
 		}
@@ -408,7 +418,11 @@ var deezer= deezer || false;
 		deezer.setting.currentPlay.css("background","url(img/eq_primary.gif) #ccc 2% 50% no-repeat")
 	  }
 	},
-	all_init_default_event:function(){
+	all_init_default_event:function(opt){
+	  op = $.extend({}, deezer.setting.app, opt);
+
+	  deezer.init({appId:op.appId,channelUrl:op.channelUrl,player:op.player })
+	
 	  deezer.addEventListener(EVENT.CURRENT_TRACK, deezer.default_current_track);
 	  deezer.addEventListener(EVENT.PLAYER_LOADED, function(){});
 	  deezer.addEventListener(EVENT.TRACK_END, deezer.default_track_end);
@@ -417,6 +431,12 @@ var deezer= deezer || false;
 	  
 	  deezer.addEventListener(EVENT.PLAYER_POSITION,deezer.setting.lineProgress);
 	  deezer.addEventListener(EVENT.SEARCH_KEYUP,deezer.setting.inputSearch);
+	},
+	add_all_controller:function(){
+	    deezer.addController.play(deezer.setting.play);
+		deezer.addController.pause(deezer.setting.pause);
+		deezer.addController.prev(deezer.setting.prev);
+		deezer.addController.next(deezer.setting.next);
 	},
 	getElementsBoxUser:function(){},
 	getElementsBoxArtist:function(){},
@@ -485,7 +505,8 @@ var deezer= deezer || false;
 	labelTextColorOver:"#FF18E3",
 	labelTextColorOut:"#646468",
 	albumInfoOpacityOver:"1",
-	albumInfoOpacityOut:"0"
+	albumInfoOpacityOut:"0",
+	app:{appId:"139735",channelUrl:"http://msdeveloper.it/brand/frame/channel.html",player:{}}
 	},
 	collectionTitle:[],
 	collectionBox:[],
