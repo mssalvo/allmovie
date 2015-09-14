@@ -1,0 +1,138 @@
+<html>
+		<head>
+
+        <title></title>
+
+		<script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
+	 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="src/js/api.all.js"></script>
+
+
+        <link href="http://msdeveloper.it/allmovie/api/css/style_ut.css" media="screen" rel="stylesheet" type="text/css">
+        <link href="http://msdeveloper.it/allmovie/api/dist/css/bootstrap.css" rel="stylesheet">
+        <link href="http://msdeveloper.it/allmovie/api/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+
+
+		<link href="http://msdeveloper.it/allmovie/css/style.css" rel="stylesheet">
+		
+		</head>
+		
+		<body>
+
+		<div style="float:left;width:24.5%; height:100%; overflow:auto;">
+		<img id="image" src="http://msdeveloper.it/allmovie/img/msalvo-project.png">
+		<div id="titoloCover"></div>
+		<div style="width:100%; height:33px;">
+		<input type="button" class="btnPrev" value="prev" id="prev">
+		<input type="button" class="btnPlay" value="play" id="play">
+		<input type="button" class="btnPausa" value="pause" id="pause">
+		<input type="button" class="btnNext" value="next" id="next">
+		</div>
+		<input type="text" placeholder="search" id="search" class="search">
+
+		<div id="boxProgressBar" class="boxProgress">
+		<div id="progressBar" class="progessBar"></div>
+		</div>
+		<div id="menu"></div>
+		</div>
+
+
+		<div id="content-body" style="float:left;width:50%; height:100%; overflow:auto;">
+
+		<div class="jumbotron"><h1>AllMovie javascript library </h1><p>All deezer component <br> loose player! <br>Draw your player as you like more</p><p><a href="#" role="button" class="-"></a></p></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Setting All event default</b></h3></div><div class="panel-body">Example:<br> deezer.all_init_default_event();</div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Setting All controller button</b></h3></div><div class="panel-body">Example:<br> deezer.add_all_controller();</div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Setting manualy controller player</b></h3></div><div class="panel-body">Example:<br> deezer.addController.play($("#play"));<br><br>  Example:<br> deezer.addController.pause($("#pause"));<br><br>  Example:<br> deezer.addController.prev($("#prev"));<br><br>  Example:<br> deezer.addController.next($("#next"));</div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Setting BoxMenu</b></h3></div><div class="panel-body">Example:<br> deezer.setting.boxMenu=$("#menu");</div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Setting BoxAlbum</b></h3></div><div class="panel-body">Example:<br> deezer.setting.boxMenu=$("#menu");</div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Setting BoxProgressBar</b></h3></div><div class="panel-body">Example:<br> deezer.setting.boxProgressBar=$("#boxProgressBar");</div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Setting lineProgress</b></h3></div><div class="panel-body">Example:<br> deezer.setting.lineProgress=$("#lineProgress");</div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Setting titolo Cover</b></h3></div><div class="panel-body">Example:<br> deezer.setting.titoloCover=$("#titolo");</div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Setting image Cover</b></h3></div><div class="panel-body">Example:<br> deezer.setting.imageCover=$("#image");</div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Setting button Play</b></h3></div><div class="panel-body">Example:<br> deezer.setting.play=$("#play");</div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Setting button Prev</b></h3></div><div class="panel-body">Example:<br> deezer.setting.prev=$("#prev");</div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Setting button Pause</b></h3></div><div class="panel-body">Example:<br> deezer.setting.prev=$("#pause");</div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Setting button Next</b></h3></div><div class="panel-body">Example:<br> deezer.setting.boxMenu=$("#next");</div></div><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Setting input Search</b></h3></div><div class="panel-body">Example:<br> deezer.setting.inputSearch=$("#search");</div></div><div class="list-group"></div><a class="list-group-item">Item_list_group 1</a><div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title"><b style="color:#000">Example Page html</b></h3></div><div class="panel-body" style="text-align:justify">Example:<br>&lt;div style="float:left;width:24.5%; height:100%; overflow:auto;"&gt;<br>&lt;img id="image"&gt; <br>&lt;div id="titoloCover"&gt;<br>&lt;/div&gt;<br>&lt;div style="width:100%; height:33px;"&gt;<br>&lt;input type="button" class="btnPrev" value="prev" id="prev"&gt;<br>&lt;input type="button" class="btnPlay" value="play" id="play"&gt;<br>&lt;input type="button" class="btnPausa" value="pause" id="pause"&gt; <br>&lt;input type="button" class="btnNext" value="next" id="next"&gt; &lt;/div&gt;<br>&lt;input type="text" placeholder="search" id="search" class="search"&gt;<br>&lt;div id="boxProgressBar" class="boxProgress"&gt;<br>&lt;div id="lineProgress" class="progessBar"&gt; &lt;/div&gt;<br>&lt;/div&gt;<br>&lt;div id="menu"&gt;&lt;/div&gt;<br>&lt;/div&gt;<br>&lt;div id="content-body" style="float:left;width:50%; height:100%; overflow:auto;"&gt;&lt;/div&gt;<br>&lt;div style="float:left; width:24.5%; height:100%; overflow:auto;"&gt;<br>&lt;div id="album"&gt; &lt;/div&gt;<br>&lt;/div&gt;<br><br>	<br>&lt;script src="http://cdn-files.deezer.com/js/min/dz.js"&gt;&lt;/script&gt;<br>&lt;script type="text/javascript" src="js/core/jquery-1.10.2.min.js"&gt;&lt;/script&gt;<br>&lt;script type="text/javascript" src="js/api.all.js"&gt;&lt;/script&gt;<br>&lt;link href="css/style.css" rel="stylesheet"&gt;<br><br>&lt;script&gt;<br>	<br>(function(api){	<br>	api.setting.boxMenu=$("#menu");	<br>   api.setting.boxAlbum=$("#album");	<br>	api.setting.boxProgressBar=$("#boxProgressBar");	<br>	api.setting.lineProgress=$("#lineProgress");	<br>	api.setting.titoloCover=$("#titoloCover");	<br>	api.setting.imageCover=$("#image");	<br>	api.setting.play=$("#play");	<br>	api.setting.pause=$("#pause");	<br>	api.setting.prev=$("#prev");	<br>	api.setting.next=$("#next");	<br>	api.setting.inputSearch=$("#search");<br><br>	<br>		api.init({	<br>		appId  : "139735",	<br>		channelUrl : "http://msdeveloper.it/brand/frame/channel.html",	<br>		player: { }	<br>	    })<br>	<br>	api.add_all_controller();<br>			<br>	api.all_init_default_event();<br> <br>  })(api.deezer)<br>&lt;/script&gt;<br></div></div><div class="jumbotron"><h1>Api AllMovie </h1><p><i style="font-size:9pt;">By Salvatore Mariniello</i></p><p><a href="#" role="button" class="-"></a></p></div></div>
+		<div style="float:left; width:24.5%; height:100%; overflow:auto;">
+		<div id="album"></div>
+		</div>
+    <script type="text/javascript">
+
+
+
+
+	   (function(api){
+
+
+		api.setting.boxMenu=$("#menu");
+	    api.setting.boxAlbum=$("#album");
+		api.setting.boxProgressBar=$("#boxProgressBar");
+		api.setting.lineProgress=$("#progressBar");
+		api.setting.titoloCover=$("#titoloCover");
+		api.setting.imageCover=$("#image");
+		api.setting.play=$("#play");
+		api.setting.pause=$("#pause");
+		api.setting.prev=$("#prev");
+		api.setting.next=$("#next");
+		api.setting.inputSearch=$("#search");
+	    api.setting.fnMenu=function(r){
+		resp =  r.response.data;
+		//collectionBrani= r.trackers;
+		//tracksId=r.ids;
+		console.log( "fnMenu ", r);
+		};
+	    api.setting.fnAlbum=function(r){
+		console.log( "fnAlbum ", r);
+
+		};
+		api.setting.fnAll=function(r){
+		console.log( "fnAll ", r);
+		};
+
+		/*
+			api.init({
+			appId  : '139735',
+			channelUrl : 'http://msdeveloper.it/brand/frame/channel.html',
+			player: { }
+		    })
+
+		*/
+		
+		// addi various controls to the buttons, passing the object as a parameter html
+		/*
+		api.addController.play($("#play"));
+		api.addController.pause($("#pause"));
+		api.addController.prev($("#prev"));
+		api.addController.next($("#next"));
+		*/
+
+		api.add_all_controller();
+
+		api.all_init_default_event();
+
+		/*
+		// add the control to the ProgressBar, step object as a parameter html
+		 api.addEventListener(EVENT.PLAYER_POSITION, $("#progressBar"));
+
+		// add a function to the event player_play, step parameter as a function
+		api.addEventListener(EVENT.PLAYER_PLAY, ap.default_player_play);
+
+		// addizziono una funzione all'evento player_paused, passo come parametro una function
+		api.addEventListener(EVENT.PLAYER_PAUSED, ap.default_player_paused);
+
+		// add a function to the event track_end, step parameter as a function
+		api.addEventListener(EVENT.TRACK_END, ap.default_track_end);
+
+		// add a function to the event player_loaded, step parameter as a function
+		api.addEventListener(EVENT.PLAYER_LOADED, function(){});
+
+		// add a function to the event current_track, step parameter as a function
+		api.addEventListener(EVENT.CURRENT_TRACK, ap.default_current_track);
+
+		//api.addEventListener(EVENT.SEARCH_BLUR,$("#search"));
+
+		api.addEventListener(EVENT.SEARCH_KEYUP,$("#search"));
+		 */
+		 
+		   api.addEventListener(EVENT.SEARCH_BLUR,$("#search"));
+          
+		  })(api.deezer)
+
+
+
+
+		</script>
+		
+
+
+</body>
+
+
+</html>

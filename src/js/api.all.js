@@ -317,7 +317,7 @@ var deezer= deezer || false;
 			  if(deezer.collectionTitle.length>0){
 					for(var k=0;k < deezer.collectionTitle.length;k++){
 					 if(deezer.collectionTitle[k].id==r.id){
-					c= deezer.collectionTitle[k].el.css("background","url(img/eq_primary.gif) #ccc 2% 50% no-repeat")
+					c= deezer.collectionTitle[k].el.css("background","url(http://msdeveloper.it/allmovie/img/eq_primary.gif) #ccc 2% 50% no-repeat")
 					 }else{
 					 deezer.collectionTitle[k].el.css("background","transparent")
 					 }
@@ -413,9 +413,9 @@ var deezer= deezer || false;
 	default_player_play:function(e){
 	 deezer.setting.lineProgress.css("display","block")
 	 deezer.setting.play.css("display","none")
-	 deezer.setting.pause.css("display","block").css("background","url(img/eq_white.gif) #252525 no-repeat center center")
+	 deezer.setting.pause.css("display","block").css("background","url(http://msdeveloper.it/allmovie/img/eq_white.gif) #252525 no-repeat center center")
 	 if(deezer.setting.currentPlay!=null){
-		deezer.setting.currentPlay.css("background","url(img/eq_primary.gif) #ccc 2% 50% no-repeat")
+		deezer.setting.currentPlay.css("background","url(http://msdeveloper.it/allmovie/img/eq_primary.gif) #ccc 2% 50% no-repeat")
 	  }
 	},
 	all_init_default_event:function(opt){
@@ -558,4 +558,3 @@ var api=api || false;
    youtube:y
  }:api;
 })(deezer,youtube)
-  
