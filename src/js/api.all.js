@@ -284,23 +284,26 @@ var deezer= deezer || false;
 	},
 	 fn_search_blur:function(){
 		
-		if(deezer.setting.boxAlbum){
+		if(deezer.setting.boxAlbum && deezer.search_val!=$.trim($(this).val())){
 		deezer.setting.boxAlbum.html("")
-		}
+ 		deezer.search_val=$.trim($(this).val());	
+	
 		 // avvio la ricerca per più chiavi di ricerca 
 		 deezer.search.all($(this).val());	
 		 // avvio la ricerca per solo album 
 		 deezer.search.album($(this).val());
+	 }
 	},
 	fn_search_click:function(){
-		
-		if(deezer.setting.boxAlbum){
+		if(deezer.setting.boxAlbum && deezer.search_val!=$.trim(deezer.setting.inputSearch.val())){
 		deezer.setting.boxAlbum.html("")
-		}
+	    deezer.search_val=$.trim(deezer.setting.inputSearch.val());
 		 // avvio la ricerca per più chiavi di ricerca 
 		 deezer.search.all(deezer.setting.inputSearch.val());	
 		 // avvio la ricerca per solo album 
 		 deezer.search.album(deezer.setting.inputSearch.val());
+	}
+	
 	},
 	
 	fn:function(r,f){ f(r)
@@ -513,6 +516,7 @@ var deezer= deezer || false;
 	tracksid:[],
 	albumid:[],
 	index:0,
+	search_val:"",
 	currentPlay:false,
 	getIndex:function(b){
 	if(b){
