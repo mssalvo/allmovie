@@ -2,7 +2,7 @@ allmovie
 ========
 <b>Draw your Deezer player with html tags and combines controls thanks to the bees Allmovie</b>
 </b>
-#Setting All event default
+#Setting All event default.
 
 Example:<br>
 
